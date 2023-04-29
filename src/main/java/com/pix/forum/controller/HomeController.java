@@ -32,7 +32,7 @@ public class HomeController {
         this.userService = userService;
     }
 
-    @RequestMapping(path = "/index", method = RequestMethod.GET)
+    @GetMapping("/index")
     public String getIndexPage(Model model,Page page){
         // 方法调用之前SpringMVC会自动实例化Model和page
         //thymeleaf可以自动访问

@@ -5,8 +5,10 @@ package com.pix.forum;
  * @Date 2023/4/26 22:19
  */
 import com.pix.forum.dao.DiscussPostMapper;
+import com.pix.forum.dao.LoginTicketMapper;
 import com.pix.forum.dao.UserMapper;
 import com.pix.forum.entity.DiscussPost;
+import com.pix.forum.entity.LoginTicket;
 import com.pix.forum.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,8 @@ import java.util.List;
 public class MapperTests {
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
     @Autowired
     private DiscussPostMapper discussPostMapper;
     @Test
@@ -70,4 +73,26 @@ public class MapperTests {
 
         System.out.println(discussPostMapper.selectDiscussPostRows(0));
     }
+
+    @Test
+    public void testInsertLoginTicket(){
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(101);
+        loginTicket.setTicket("abc");
+        loginTicket.setStatus(0);
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + 60*1000*10));
+        loginTicketMapper.insertLoginTicket(loginTicket);
+    }
+    @Test
+    public void testSelectLoginTicket(){
+        LoginTicket loginTicket = loginTicketMapper.selectByTicket("abc");
+        System.out.println(loginTicket);
+
+        loginTicketMapper.updateStatus("abc",1);
+        loginTicket = loginTicketMapper.selectByTicket("abc");
+        System.out.println(loginTicket);
+
+
+    }
+
 }
