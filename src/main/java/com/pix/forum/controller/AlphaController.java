@@ -1,6 +1,8 @@
 package com.pix.forum.controller;
 
 import java.util.*;
+
+import com.pix.forum.util.CommunityUtil;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -109,6 +111,14 @@ public class AlphaController {
         emp.put("age",23);
         emp.put("salary",8000.00);
         return emp;
+    }
+
+    @PostMapping(path = "/ajax")
+    @ResponseBody
+    public String testAjax(String name,String age){
+        System.out.println(name);
+        System.out.println(age);
+        return CommunityUtil.getJsonString(0,"操作成功");
     }
 
 }
