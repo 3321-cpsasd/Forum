@@ -3,7 +3,7 @@ package com.pix.forum;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(excludeName = {"MultipartAutoConfiguration.class"})
 public class ForumApplication {
 
     public static void main(String[] args) {
