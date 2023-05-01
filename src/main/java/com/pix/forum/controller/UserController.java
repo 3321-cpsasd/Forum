@@ -2,6 +2,7 @@ package com.pix.forum.controller;
 
 import com.pix.forum.annotation.LoginRequired;
 import com.pix.forum.entity.User;
+import com.pix.forum.service.LikeService;
 import com.pix.forum.service.UserService;
 import com.pix.forum.util.CommunityUtil;
 import com.pix.forum.util.HostHolder;
@@ -41,6 +42,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private LikeService likeService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -125,5 +128,18 @@ public class UserController {
         newPassword = CommunityUtil.md5(newPassword + user.getSalt());
         userService.updatePassword(user.getId(),newPassword);
         return "redirect:/index";
+    }
+
+    @GetMapping("/profile/{userId}")
+    public String getProfilePage(@PathVariable("userId") int userId,Model model){
+        User user = userService.findUserById(userId);
+        if(user == null){
+            throw new RuntimeException("该用户不存在");
+        }
+        model.addAttribute("user",user);
+        int likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("likeCount",likeCount);
+        return "site/profile";
+
     }
 }

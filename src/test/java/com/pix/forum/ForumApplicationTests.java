@@ -1,7 +1,9 @@
 package com.pix.forum;
 
+import io.lettuce.core.RedisURI;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
 
 @SpringBootTest
 class ForumApplicationTests {

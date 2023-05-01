@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
  * @Date 2023/4/29 15:54
  */
 @Mapper
+@Deprecated
 public interface LoginTicketMapper {
     @Insert({
             "insert into login_ticket(user_id,ticket,status,expired) ",

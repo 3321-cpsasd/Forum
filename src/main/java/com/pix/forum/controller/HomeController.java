@@ -4,7 +4,9 @@ import com.pix.forum.entity.DiscussPost;
 import com.pix.forum.entity.Page;
 import com.pix.forum.entity.User;
 import com.pix.forum.service.DiscussPostService;
+import com.pix.forum.service.LikeService;
 import com.pix.forum.service.UserService;
+import com.pix.forum.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +24,11 @@ import java.util.Map;
  * @Date 2023/4/28 15:50
  */
 @Controller
-public class HomeController {
+public class HomeController implements CommunityConstant {
     private DiscussPostService discussPostService;
     private UserService userService;
+    @Autowired
+    private LikeService likeService;
 
     @Autowired
     public HomeController(DiscussPostService discussPostService, UserService userService) {
@@ -40,17 +44,21 @@ public class HomeController {
         page.setPath("/index");
 
         List<DiscussPost> list = discussPostService.findDiscussPosts(0, page.getOffset(), page.getLimit());
-        List<Map<String,Object>> discussPosts = new ArrayList<>();
-        if(list != null){
+        List<Map<String, Object>> discussPosts = new ArrayList<>();
+        if (list != null) {
             for (DiscussPost post : list) {
-                Map<String,Object> map = new HashMap<>();
-                map.put("post",post);
+                Map<String, Object> map = new HashMap<>();
+                map.put("post", post);
                 User user = userService.findUserById(post.getUserId());
-                map.put("user",user);
+                map.put("user", user);
+
+                //赞的数量
+                long entityLikeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount",entityLikeCount);
                 discussPosts.add(map);
             }
         }
-        model.addAttribute("discussPosts",discussPosts);
+        model.addAttribute("discussPosts", discussPosts);
         return "/index";
     }
 
