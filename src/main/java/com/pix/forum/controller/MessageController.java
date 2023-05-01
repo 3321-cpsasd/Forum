@@ -36,9 +36,7 @@ public class MessageController implements CommunityConstant {
     // 私信列表
     @GetMapping ("/letter/list")
     public String getLetterList(Model model, Page page) {
-
         User user = hostHolder.getUser();
-
         // 分页信息
         page.setLimit(5);
         page.setPath("/letter/list");

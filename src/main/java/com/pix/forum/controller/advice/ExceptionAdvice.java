@@ -24,7 +24,6 @@ public class ExceptionAdvice {
         for (StackTraceElement element : e.getStackTrace()) {
             log.error(element.toString());
         }
-
         String xRequestedWith = request.getHeader("x-requested-with");
         if ("XMLHttpRequest".equals(xRequestedWith)) { // 异步请求
             response.setContentType("application/plain;charset=utf-8");
